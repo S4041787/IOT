@@ -1,10 +1,8 @@
-#!/usr/bin/env python3
 import bluetooth
 import sqlite3
 import time
 from sense_hat import SenseHat
 
-# DB 초기화
 def init_db():
     conn = sqlite3.connect("devices.db")
     cursor = conn.cursor()
@@ -41,7 +39,6 @@ def check_device(mac, name):
         conn.close()
         return "new"
 
-# 메인 탐색 함수
 def scan_devices():
     sense = SenseHat()
     
