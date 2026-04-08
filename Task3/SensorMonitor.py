@@ -1,6 +1,7 @@
 import json
 import sqlite3
 import time
+import os
 from sense_hat import SenseHat
 
 
@@ -29,8 +30,13 @@ class SensorMonitor:
             print("Config error:", e)
             exit()
 
+
+
     def setup_db(self):
-        self.conn = sqlite3.connect("envirotrack.db")
+        db_path = os.path.abspath("envirotrack.db")
+        print("DB path:", db_path)
+    
+        self.conn = sqlite3.connect(db_path)
         self.cursor = self.conn.cursor()
 
         self.cursor.execute("""
