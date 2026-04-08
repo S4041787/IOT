@@ -29,3 +29,14 @@ plt.tight_layout()
 plt.savefig("temperature_status_bar.png")
 
 print("Graphs generated!")
+
+# 3️ Scatter Plot
+plt.figure()
+hum_counts = df["humidity_status"].value_counts()
+
+sns.barplot(x=hum_counts.index, y=hum_counts.values)
+plt.title("Humidity Status Distribution")
+plt.xlabel("Status")
+plt.ylabel("Count")
+plt.tight_layout()
+plt.savefig("humidity_status_bar.png")
