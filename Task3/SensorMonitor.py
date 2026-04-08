@@ -12,7 +12,7 @@ class SensorMonitor:
         self.load_config()
         self.setup_db()
 
-        self.last_read_time = 0
+        self.last_read_time = -10
         self.display_index = 0
         self.last_display_time = 0
 
@@ -80,6 +80,8 @@ class SensorMonitor:
         return temp, humidity, pressure, pitch, roll, yaw
 
     def log_data(self, data):
+        print("Saving data...", data) 
+
         self.cursor.execute("""
         INSERT INTO readings 
         (temperature, humidity, pressure, pitch, roll, yaw,
@@ -117,10 +119,15 @@ class SensorMonitor:
                 self.paused = not self.paused
 
     def run(self):
+        
+        temp = hum = pres = pitch = roll = yaw = 0
+        temp_status = hum_status = pres_status = orient_status = "Comfortable"
+
         while True:
             self.handle_input()
 
             if self.paused:
+                time.sleep(0.1)
                 continue
 
             now = time.time()
@@ -146,8 +153,10 @@ class SensorMonitor:
 
                 self.last_read_time = now
 
-            self.display(temp, hum, pres, pitch, roll, yaw,
-                         (temp_status, hum_status, pres_status, orient_status))
+            self.display(
+                temp, hum, pres, pitch, roll, yaw,
+                (temp_status, hum_status, pres_status, orient_status)
+            )
 
             time.sleep(0.1)
 
