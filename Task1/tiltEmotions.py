@@ -37,18 +37,18 @@ class TiltEmotions:
             return 3  # surprise
         else:
             return 4  # expressionless
-
+    
     def detect_flip(self, roll):
-        now = time.time()
+    now = time.time()
 
-        if abs(roll - self.last_roll) > 60 and (now - self.last_time) < 0.5:
-            self.last_roll = roll
-            self.last_time = now
-            return True
-
+    if abs(roll - self.last_roll) > 120 and (now - self.last_time) < 0.2:
         self.last_roll = roll
         self.last_time = now
-        return False
+        return True
+
+    self.last_roll = roll
+    self.last_time = now
+    return False
 
     def play_flip(self):
         for _ in range(3):
